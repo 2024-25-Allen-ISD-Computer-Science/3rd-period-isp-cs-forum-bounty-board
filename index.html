@@ -10,21 +10,19 @@
             font-family: Arial, sans-serif;
             display: flex;
             height: 100vh;
-            margin: 0;
         }
         h1 {
+            margin: 0;
             color: white;
         }
     </style>
     <style>
-        body {
-            padding: 20px;
-        }
         .grid-container {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             width: 80%;
+            padding: 20px;
         }
         .grid-item {
             background-color: white;
@@ -39,24 +37,47 @@
 </head>
 <body>
     <div style="flex: 1">
-    <div class="grid-container">
-        <div class="grid-item">
-            <h2>Bounty Title 1</h2>
-            <p>Description for bounty 1.</p>
-        </div>
-        <div class="grid-item">
-            <h2>Bounty Title 2</h2>
-            <p>Description for bounty 2.</p>
-        </div>
-        <div class="grid-item">
-            <h2>Bounty Title 3</h2>
-            <p>Description for bounty 3.</p>
-        </div>
-        <div class="grid-item">
-            <h2>Bounty Title 4</h2>
-            <p>Description for bounty 4.</p>
-        </div>
+    <button id="addBountyBtn">Add Bounty</button>
+
+    <div id="bountyModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);">
+        <h2>Add New Bounty</h2>
+        <label for="bountyTitle">Title:</label>
+        <input type="text" id="bountyTitle" name="bountyTitle"><br><br>
+        <label for="bountyDescription">Description:</label>
+        <textarea id="bountyDescription" name="bountyDescription"></textarea><br><br>
+        <button id="saveBountyBtn">Save</button>
+        <button id="closeModalBtn">Close</button>
     </div>
+
+    <script>
+        document.getElementById('addBountyBtn').addEventListener('click', function() {
+            document.getElementById('bountyModal').style.display = 'block';
+        });
+
+        document.getElementById('closeModalBtn').addEventListener('click', function() {
+            document.getElementById('bountyModal').style.display = 'none';
+        });
+
+        document.getElementById('saveBountyBtn').addEventListener('click', function() {
+            const title = document.getElementById('bountyTitle').value;
+            const description = document.getElementById('bountyDescription').value;
+
+            if (title && description) {
+                const newBounty = document.createElement('div');
+                newBounty.className = 'grid-item';
+                newBounty.innerHTML = `<h2>${title}</h2><p>${description}</p>`;
+                document.querySelector('.grid-container').appendChild(newBounty);
+
+                document.getElementById('bountyModal').style.display = 'none';
+                document.getElementById('bountyTitle').value = '';
+                document.getElementById('bountyDescription').value = '';
+            }
+        });
+    </script>
+    
+        <div class="grid-container">
+
+        </div>
     </div>
     
 </body>
