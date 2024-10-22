@@ -6,23 +6,55 @@
     <title>Hello World</title>
     <style>
         body {
-            background-color: gray;
-            font-family: Arial, sans-serif;
-            display: flex;
-            height: 100vh;
+            background: linear-gradient(to right, #4e54c8, #8f94fb);
+            color: #333;
+            justify-content: center;
+            align-items: center;
         }
-        h1 {
-            margin: 0;
+
+        button {
+            background-color: #404040;
             color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
         }
-    </style>
-    <style>
+
+        button:hover {
+            background-color: #8f94fb;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 10px;
+            margin: 5px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #bountyModal {
+            max-width: 500px;
+            width: 100%;
+        }
+
         .grid-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             display: grid;
+            padding: 20px;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 20px;
             width: 80%;
-            padding: 20px;
+            margin: 0 auto;
+
+        }
+        
+        h1 {
+            margin: 0;
+            color: white;
         }
         .grid-item {
             background-color: white;
@@ -79,6 +111,37 @@
 
         </div>
     </div>
+    <script>
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.grid-item')) {
+                const bountyItem = event.target.closest('.grid-item');
+                const title = bountyItem.querySelector('h2').innerText;
+                const description = bountyItem.querySelector('p').innerText;
+
+                const viewModal = document.createElement('div');
+                viewModal.style.display = 'block';
+                viewModal.style.position = 'fixed';
+                viewModal.style.top = '50%';
+                viewModal.style.left = '50%';
+                viewModal.style.transform = 'translate(-50%, -50%)';
+                viewModal.style.backgroundColor = 'white';
+                viewModal.style.padding = '20px';
+                viewModal.style.borderRadius = '10px';
+                viewModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                viewModal.innerHTML = `
+                    <h2>${title}</h2>
+                    <p>${description}</p>
+                    <button id="closeViewModalBtn">Close</button>
+                `;
+
+                document.body.appendChild(viewModal);
+
+                document.getElementById('closeViewModalBtn').addEventListener('click', function() {
+                    document.body.removeChild(viewModal);
+                });
+            }
+        });
+    </script>
     
 </body>
 </html>
