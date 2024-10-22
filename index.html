@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hello World</title>
+    <style>
+        body {
+            background-color: gray;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+            margin: 0;
+        }
+        h1 {
+            color: white;
+        }
+    </style>
+    <style>
+        body {
+            padding: 20px;
+        }
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+            width: 80%;
+        }
+        .grid-item {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .grid-item h2 {
+            margin-top: 0;
+        }
+    </style>
+</head>
+<body>
+    <div style="flex: 1">
+    <div class="grid-container">
+        <div class="grid-item">
+            <h2>Bounty Title 1</h2>
+            <p>Description for bounty 1.</p>
+        </div>
+        <div class="grid-item">
+            <h2>Bounty Title 2</h2>
+            <p>Description for bounty 2.</p>
+        </div>
+        <div class="grid-item">
+            <h2>Bounty Title 3</h2>
+            <p>Description for bounty 3.</p>
+        </div>
+        <div class="grid-item">
+            <h2>Bounty Title 4</h2>
+            <p>Description for bounty 4.</p>
+        </div>
+    </div>
+    </div>
+    
+</body>
+</html>
