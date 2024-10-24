@@ -81,6 +81,41 @@
                 });
             }
         });
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.grid-item')) {
+                const bountyItem = event.target.closest('.grid-item');
+                const title = bountyItem.querySelector('h2').innerText;
+                const description = bountyItem.querySelector('p').innerText;
+
+                const viewModal = document.createElement('div');
+                viewModal.style.display = 'block';
+                viewModal.style.position = 'fixed';
+                viewModal.style.top = '50%';
+                viewModal.style.left = '50%';
+                viewModal.style.transform = 'translate(-50%, -50%)';
+                viewModal.style.backgroundColor = 'white';
+                viewModal.style.padding = '20px';
+                viewModal.style.borderRadius = '10px';
+                viewModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
+                viewModal.innerHTML = `
+                    <h2>${title}</h2>
+                    <p>${description}</p>
+                    <button id="closeViewModalBtn">Close</button>
+                    <button id="removeBountyBtn">Remove</button>
+                `;
+
+                document.body.appendChild(viewModal);
+
+                document.getElementById('closeViewModalBtn').addEventListener('click', function() {
+                    document.body.removeChild(viewModal);
+                });
+
+                document.getElementById('removeBountyBtn').addEventListener('click', function() {
+                    document.body.removeChild(viewModal);
+                    bountyItem.remove();
+                });
+            }
+        });
     </script>
     
 </body>
