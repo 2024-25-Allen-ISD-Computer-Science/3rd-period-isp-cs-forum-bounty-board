@@ -3,75 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hello World</title>
-    <style>
-        body {
-            background: linear-gradient(to right, #4e54c8, #8f94fb);
-            color: #333;
-            justify-content: center;
-            align-items: center;
-        }
-
-        button {
-            background-color: #404040;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: background-color 0.3s ease;
-        }
-
-        button:hover {
-            background-color: #8f94fb;
-        }
-
-        input, textarea {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-        }
-
-        #bountyModal {
-            max-width: 500px;
-            width: 100%;
-        }
-
-        .grid-container {
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: grid;
-            padding: 20px;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 20px;
-            width: 80%;
-            margin: 0 auto;
-
-        }
-        
-        h1 {
-            margin: 0;
-            color: white;
-        }
-        .grid-item {
-            background-color: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .grid-item h2 {
-            margin-top: 0;
-        }
-    </style>
+    <title>Bounty Board</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
     <div style="flex: 1">
     <button id="addBountyBtn">Add Bounty</button>
 
-    <div id="bountyModal" style="display:none; position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); background-color:white; padding:20px; border-radius:10px; box-shadow:0 4px 8px rgba(0, 0, 0, 0.1);">
+    <div id="bountyModal">
         <h2>Add New Bounty</h2>
         <label for="bountyTitle">Title:</label>
         <input type="text" id="bountyTitle" name="bountyTitle"><br><br>
