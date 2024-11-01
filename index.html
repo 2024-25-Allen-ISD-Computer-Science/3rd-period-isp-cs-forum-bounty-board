@@ -8,8 +8,8 @@
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div style="flex: 1">
-    <button id="addBountyBtn">Add Bounty</button>
+
+    <button id="addBountyBtn" type="button" class="btn btn-lg btn-primary">Add Bounty</button>
 
     <div id="bountyModal">
         <h2>Add New Bounty</h2>
@@ -21,6 +21,9 @@
         <button id="closeModalBtn">Close</button>
     </div>
 
+    <div style="flex: 1">
+    
+    
     <script>
         document.getElementById('addBountyBtn').addEventListener('click', function() {
             document.getElementById('bountyModal').style.display = 'block';
@@ -46,7 +49,6 @@
             }
         });
     </script>
-    
         <div class="grid-container">
 
         </div>
