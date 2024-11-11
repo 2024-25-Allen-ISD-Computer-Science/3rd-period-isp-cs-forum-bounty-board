@@ -3,122 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bounty Board</title>
+
+    <title>CS Forum Bounty Board</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-
-    <button id="addBountyBtn" type="button" class="btn btn-lg btn-primary">Add Bounty</button>
-
-    <div id="bountyModal">
-        <h2>Add New Bounty</h2>
-        <label for="bountyTitle">Title:</label>
-        <input type="text" id="bountyTitle" name="bountyTitle"><br><br>
-        <label for="bountyDescription">Description:</label>
-        <textarea id="bountyDescription" name="bountyDescription"></textarea><br><br>
-        <button id="saveBountyBtn">Save</button>
-        <button id="closeModalBtn">Close</button>
-    </div>
-
-    <div style="flex: 1">
-    
-    
-    <script>
-        document.getElementById('addBountyBtn').addEventListener('click', function() {
-            document.getElementById('bountyModal').style.display = 'block';
-        });
-
-        document.getElementById('closeModalBtn').addEventListener('click', function() {
-            document.getElementById('bountyModal').style.display = 'none';
-        });
-
-        document.getElementById('saveBountyBtn').addEventListener('click', function() {
-            const title = document.getElementById('bountyTitle').value;
-            const description = document.getElementById('bountyDescription').value;
-
-            if (title && description) {
-                const newBounty = document.createElement('div');
-                newBounty.className = 'grid-item';
-                newBounty.innerHTML = `<h2>${title}</h2><p>${description}</p>`;
-                document.querySelector('.grid-container').appendChild(newBounty);
-
-                document.getElementById('bountyModal').style.display = 'none';
-                document.getElementById('bountyTitle').value = '';
-                document.getElementById('bountyDescription').value = '';
-            }
-        });
-    </script>
-        <div class="grid-container">
-
+    <h1>CS Forum Bounty Board</h1>
+    <form id="taskForm">
+        <input type="text" id="taskInput" placeholder="Enter a new task" required>
+        <select id="taskColumn" required>
+            <option value="mainForum">Main Forum</option>
+            <option value="cyberSecurity">CyberSecurity</option>
+            <option value="cshs">Computer Science Honor Society</option>
+        </select>
+        <button type="submit">Add Task</button>
+    </form>
+    <div class="board">
+        <div class="column" id="mainForum">
+            <h2>Main Forum</h2>
+        </div>
+        <div class="column" id="cyberSecurity">
+            <h2>CyberSecurity</h2>
+        </div>
+        <div class="column" id="cshs">
+            <h2>Computer Science Honor Society</h2>
         </div>
     </div>
-    <script>
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('.grid-item')) {
-                const bountyItem = event.target.closest('.grid-item');
-                const title = bountyItem.querySelector('h2').innerText;
-                const description = bountyItem.querySelector('p').innerText;
-
-                const viewModal = document.createElement('div');
-                viewModal.style.display = 'block';
-                viewModal.style.position = 'fixed';
-                viewModal.style.top = '50%';
-                viewModal.style.left = '50%';
-                viewModal.style.transform = 'translate(-50%, -50%)';
-                viewModal.style.backgroundColor = 'white';
-                viewModal.style.padding = '20px';
-                viewModal.style.borderRadius = '10px';
-                viewModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-                viewModal.innerHTML = `
-                    <h2>${title}</h2>
-                    <p>${description}</p>
-                    <button id="closeViewModalBtn">Close</button>
-                `;
-
-                document.body.appendChild(viewModal);
-
-                document.getElementById('closeViewModalBtn').addEventListener('click', function() {
-                    document.body.removeChild(viewModal);
-                });
-            }
-        });
-        document.addEventListener('click', function(event) {
-            if (event.target.closest('.grid-item')) {
-                const bountyItem = event.target.closest('.grid-item');
-                const title = bountyItem.querySelector('h2').innerText;
-                const description = bountyItem.querySelector('p').innerText;
-
-                const viewModal = document.createElement('div');
-                viewModal.style.display = 'block';
-                viewModal.style.position = 'fixed';
-                viewModal.style.top = '50%';
-                viewModal.style.left = '50%';
-                viewModal.style.transform = 'translate(-50%, -50%)';
-                viewModal.style.backgroundColor = 'white';
-                viewModal.style.padding = '20px';
-                viewModal.style.borderRadius = '10px';
-                viewModal.style.boxShadow = '0 4px 8px rgba(0, 0, 0, 0.1)';
-                viewModal.innerHTML = `
-                    <h2>${title}</h2>
-                    <p>${description}</p>
-                    <button id="closeViewModalBtn">Close</button>
-                    <button id="removeBountyBtn">Remove</button>
-                `;
-
-                document.body.appendChild(viewModal);
-
-                document.getElementById('closeViewModalBtn').addEventListener('click', function() {
-                    document.body.removeChild(viewModal);
-                });
-
-                document.getElementById('removeBountyBtn').addEventListener('click', function() {
-                    document.body.removeChild(viewModal);
-                    bountyItem.remove();
-                });
-            }
-        });
-    </script>
-    
+    <script src="addTask.js"></script>
 </body>
 </html>
