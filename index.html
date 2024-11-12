@@ -9,15 +9,32 @@
 </head>
 <body>
     <h1>CS Forum Bounty Board</h1>
-    <form id="taskForm">
-        <input type="text" id="taskInput" placeholder="Enter a new task" maxlength="35" required>
-        <select id="taskColumn" required>
-            <option value="mainForum">Main Forum</option>
-            <option value="cyberSecurity">CyberSecurity</option>
-            <option value="cshs">Computer Science Honor Society</option>
-        </select>
-        <button type="submit">Add Task</button>
-    </form>
+    <button id="openFormButton">Add New Task</button>
+
+    <div id="taskFormPopup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <form id="taskForm">
+                <h2>Add New Task</h2>
+                <input type="text" id="taskInput" placeholder="Enter a new task" maxlength="35" required>
+                <textarea id="taskDescription" placeholder="Enter task description" maxlength="200" required></textarea>
+                <select id="taskColumn" required>
+                    <option value="mainForum">Main Forum</option>
+                    <option value="cyberSecurity">CyberSecurity</option>
+                    <option value="cshs">Computer Science Honor Society</option>
+                </select>
+                <button type="submit">Add Task</button>
+                <script>
+                    document.getElementById('taskForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        taskFormPopup.style.display = 'none';
+                    });
+                </script>
+            </form>
+        </div>
+    </div>
+    <script src="taskMake.js"></script>
+    
     <div class="board">
         <div class="column" id="mainForum">
             <h2>Main Forum</h2>
@@ -30,5 +47,17 @@
         </div>
     </div>
     <script src="addTask.js"></script>
-</body>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.column').forEach(column => {
+                column.addEventListener('click', event => {
+                    if (event.target.classList.contains('task')) {
+                        const title = event.target.querySelector('.task-title').innerText;
+                        const description = event.target.querySelector('.task-description').innerText;
+                        alert(`Title: ${title}\nDescription: ${description}`);
+                    }
+                });
+            });
+        });
+    </script>
 </html>
