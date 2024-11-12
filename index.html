@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
     <title>CS Forum Bounty Board</title>
     <link rel="stylesheet" href="styles.css">
 </head>
@@ -47,17 +47,6 @@
         </div>
     </div>
     <script src="addTask.js"></script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            document.querySelectorAll('.column').forEach(column => {
-                column.addEventListener('click', event => {
-                    if (event.target.classList.contains('task')) {
-                        const title = event.target.querySelector('.task-title').innerText;
-                        const description = event.target.querySelector('.task-description').innerText;
-                        alert(`Title: ${title}\nDescription: ${description}`);
-                    }
-                });
-            });
-        });
-    </script>
+
+</body>
 </html>

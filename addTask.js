@@ -8,7 +8,7 @@ const taskForm = document.getElementById('taskForm');
             if (taskText) {
                 const task = document.createElement('div');
                 task.classList.add('task');
-                task.draggable = false;
+                task.draggable = true;
                 task.textContent = taskText;
                 document.getElementById(taskColumn.value).appendChild(task);
                 taskInput.value = '';
@@ -33,4 +33,23 @@ const taskForm = document.getElementById('taskForm');
                 });
             });
         }
+        document.addEventListener('DOMContentLoaded', () => {
+            const openFormButton = document.getElementById('openFormButton');
+            const taskFormPopup = document.getElementById('taskFormPopup');
+            const closeButton = document.querySelector('.close');
+
+            openFormButton.addEventListener('click', () => {
+                taskFormPopup.style.display = 'block';
+            });
+
+            closeButton.addEventListener('click', () => {
+                taskFormPopup.style.display = 'none';
+            });
+
+            window.addEventListener('click', (event) => {
+                if (event.target == taskFormPopup) {
+                    taskFormPopup.style.display = 'none';
+                }
+            });
+        });
         
