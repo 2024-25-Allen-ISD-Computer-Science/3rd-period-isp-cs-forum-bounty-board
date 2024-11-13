@@ -3,21 +3,38 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <!-- <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> -->
     <title>CS Forum Bounty Board</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>CS Forum Bounty Board</h1>
-    <form id="taskForm">
-        <input type="text" id="taskInput" placeholder="Enter a new task" required>
-        <select id="taskColumn" required>
-            <option value="mainForum">Main Forum</option>
-            <option value="cyberSecurity">CyberSecurity</option>
-            <option value="cshs">Computer Science Honor Society</option>
-        </select>
-        <button type="submit">Add Task</button>
-    </form>
+    <button id="openFormButton">Add New Task</button>
+
+    <div id="taskFormPopup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <form id="taskForm">
+                <h2>Add New Task</h2>
+                <input type="text" id="taskInput" placeholder="Enter a new task" maxlength="35" required>
+                <textarea id="taskDescription" placeholder="Enter task description" maxlength="200" required></textarea>
+                <select id="taskColumn" required>
+                    <option value="mainForum">Main Forum</option>
+                    <option value="cyberSecurity">CyberSecurity</option>
+                    <option value="cshs">Computer Science Honor Society</option>
+                </select>
+                <button type="submit">Add Task</button>
+                <script>
+                    document.getElementById('taskForm').addEventListener('submit', function(event) {
+                        event.preventDefault();
+                        taskFormPopup.style.display = 'none';
+                    });
+                </script>
+            </form>
+        </div>
+    </div>
+    <script src="taskMake.js"></script>
+    
     <div class="board">
         <div class="column" id="mainForum">
             <h2>Main Forum</h2>
@@ -30,5 +47,6 @@
         </div>
     </div>
     <script src="addTask.js"></script>
+
 </body>
 </html>
