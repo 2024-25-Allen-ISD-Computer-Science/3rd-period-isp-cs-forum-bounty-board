@@ -2,6 +2,7 @@ const taskForm = document.getElementById('taskForm');
         const taskInput = document.getElementById('taskInput');
         const columns = document.querySelectorAll('.column');
         const taskDescriptionInput = document.getElementById('taskDescription')
+        const fileInput = document.getElementById('taskFiles');
 
         taskForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -16,6 +17,15 @@ const taskForm = document.getElementById('taskForm');
                 const taskDescription = document.createElement('p');
                 taskDescription.textContent = taskDescriptionInput.value;
                 task.appendChild(taskDescription);
+                if (fileInput.files.length > 0) {
+                    const file = fileInput.files[0];
+                    const url = URL.createObjectURL(file);
+                    const taskFileLink = document.createElement('a');
+                    taskFileLink.href = url;
+                    taskFileLink.download = file.name;
+                    taskFileLink.textContent = file.name;
+                    task.appendChild(taskFileLink);
+                }
                 document.getElementById(taskColumn.value).appendChild(task);
                 taskInput.value = '';
                 addDragAndDropEvents(task);
