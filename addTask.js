@@ -1,6 +1,7 @@
 const taskForm = document.getElementById('taskForm');
         const taskInput = document.getElementById('taskInput');
         const columns = document.querySelectorAll('.column');
+        const taskDescriptionInput = document.getElementById('taskDescription')
 
         taskForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -9,7 +10,12 @@ const taskForm = document.getElementById('taskForm');
                 const task = document.createElement('div');
                 task.classList.add('task');
                 task.draggable = true;
-                task.textContent = taskText;
+                const taskName = document.createElement('h2'); 
+                taskName.textContent = taskInput.value;
+                task.append(taskName);
+                const taskDescription = document.createElement('p');
+                taskDescription.textContent = taskDescriptionInput.value;
+                task.appendChild(taskDescription);
                 document.getElementById(taskColumn.value).appendChild(task);
                 taskInput.value = '';
                 addDragAndDropEvents(task);
