@@ -69,7 +69,7 @@ const taskForm = document.getElementById('taskForm');
                 }
             });
 
-            // Create the sidebar element
+          
             const sidebar = document.createElement('div');
             sidebar.id = 'taskSidebar';
             
@@ -80,22 +80,19 @@ const taskForm = document.getElementById('taskForm');
             `;
             document.body.appendChild(sidebar);
 
-            // Sidebar close button functionality
             document.getElementById('closeSidebar').addEventListener('click', () => {
-                sidebar.style.right = '-350px'; // Hide sidebar
-                overlay.style.display = 'none'; // Hide overlay
+                sidebar.style.right = '-350px'; 
+                overlay.style.display = 'none'; 
             });
 
-            // Attach event listener for dynamically added tasks
             document.addEventListener('click', (event) => {
                 const task = event.target.closest('.task');
                 if (task) {
                     const taskTitle = task.querySelector('h2').innerText;
                     const taskDescription = task.querySelector('p').innerText;
-                    // Populate and show the sidebar
                     document.getElementById('sidebarTitle').innerText = taskTitle;
                     document.getElementById('sidebarDetails').innerText = taskDescription;
-                    sidebar.style.right = '0'; // Slide in sidebar
+                    sidebar.style.right = '0'; 
                 }
             });
         });
