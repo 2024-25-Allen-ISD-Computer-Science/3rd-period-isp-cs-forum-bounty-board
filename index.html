@@ -24,6 +24,8 @@
                 </select>
                 <label for="taskFiles">Additional Documents:</label>
                 <input type="file" id="taskFiles" name="taskFiles" multiple>
+                <label for="taskDeadline">Deadline:</label>
+                <input type="date" id="taskDeadline" name="taskDeadline" required>
                 <button type="submit">Add Task</button>
                 <script>
                     document.getElementById('taskForm').addEventListener('submit', function(event) {

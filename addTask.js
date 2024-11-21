@@ -27,6 +27,10 @@ const taskForm = document.getElementById('taskForm');
                     taskFileLink.textContent = file.name;
                     task.appendChild(taskFileLink);
                 }
+                const taskDeadlineInput = document.getElementById('taskDeadline');
+                const taskDeadline = document.createElement('strong');
+                taskDeadline.textContent = `Deadline: ${taskDeadlineInput.value}`;
+                task.appendChild(taskDeadline);
                 document.getElementById(taskColumn.value).appendChild(task);
                 taskInput.value = '';
                 addDragAndDropEvents(task);
