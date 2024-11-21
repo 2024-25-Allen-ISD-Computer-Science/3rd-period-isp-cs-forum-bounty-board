@@ -74,9 +74,9 @@ const taskForm = document.getElementById('taskForm');
             sidebar.id = 'taskSidebar';
             
             sidebar.innerHTML = `
-                <button id="closeSidebar" style="margin-bottom: 10px;">Close</button>
                 <h2 id="sidebarTitle">Task Title</h2>
                 <p id="sidebarDetails">Task Description</p>
+                <button id="closeSidebar" style="margin-bottom: 10px;">Close</button>
             `;
             document.body.appendChild(sidebar);
 
