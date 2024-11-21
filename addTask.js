@@ -11,6 +11,7 @@ const taskForm = document.getElementById('taskForm');
                 const task = document.createElement('div');
                 task.classList.add('task');
                 task.draggable = true;
+                task.clickable = true;
                 const taskName = document.createElement('h2'); 
                 taskName.textContent = taskInput.value;
                 task.append(taskName);
@@ -67,5 +68,56 @@ const taskForm = document.getElementById('taskForm');
                     taskFormPopup.style.display = 'none';
                 }
             });
+
+            // Create the sidebar element
+            const sidebar = document.createElement('div');
+            sidebar.id = 'taskSidebar';
+            
+            sidebar.innerHTML = `
+                <button id="closeSidebar" style="margin-bottom: 10px;">Close</button>
+                <h2 id="sidebarTitle">Task Title</h2>
+                <p id="sidebarDetails">Task Description</p>
+            `;
+            document.body.appendChild(sidebar);
+
+            // Sidebar close button functionality
+            document.getElementById('closeSidebar').addEventListener('click', () => {
+                sidebar.style.right = '-350px'; // Hide sidebar
+                overlay.style.display = 'none'; // Hide overlay
+            });
+
+            // Attach event listener for dynamically added tasks
+            document.addEventListener('click', (event) => {
+                const task = event.target.closest('.task');
+                if (task) {
+                    const taskTitle = task.querySelector('h2').innerText;
+                    const taskDescription = task.querySelector('p').innerText;
+                    // Populate and show the sidebar
+                    document.getElementById('sidebarTitle').innerText = taskTitle;
+                    document.getElementById('sidebarDetails').innerText = taskDescription;
+                    sidebar.style.right = '0'; // Slide in sidebar
+                }
+            });
         });
-        
+    const overlay = document.createElement('div');
+    overlay.id = 'overlay';
+    overlay.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.5);
+        display: none;
+        z-index: 999;
+    `;
+    document.body.appendChild(overlay);
+
+    document.addEventListener('click', (event) => {
+        const task = event.target.closest('.task');
+        if (task) {
+            overlay.style.display = 'block'; // Show overlay
+        }
+    });
+
+    
