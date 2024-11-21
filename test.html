@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Bounty</title>
+</head>
+<body>
+    <h1>Create a New Bounty</h1>
+    <form id="bountyForm">
+        <label for="name">Bounty Name:</label>
+        <input type="text" id="name" name="name" required><br><br>
+
+        <label for="description">Description:</label>
+        <textarea id="description" name="description" required></textarea><br><br>
+
+        <button type="submit">Create Bounty</button>
+    </form>
+
+    <p id="responseMessage"></p>
+
+    <script>
+        document.getElementById("bountyForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById("name").value;
+            const description = document.getElementById("description").value;
+
+            try {
+                const response = await fetch("http://127.0.0.1:8090/api/collections/bounties/records", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        name: name,
+                        description: description,
+                    }),
+                });
+
+                if (!response.ok) {
+                    const errorText = await response.text();
+                    console.error("Error:", errorText);
+                    document.getElementById("responseMessage").innerText = `Error: ${errorText}`;
+                } else {
+                    const result = await response.json();
+                    console.log("Success:", result);
+                    document.getElementById("responseMessage").innerText = "Bounty created successfully!";
+                }
+            } catch (error) {
+                console.error("Network Error:", error);
+                document.getElementById("responseMessage").innerText = `Network Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
