@@ -80,7 +80,17 @@ const taskForm = document.getElementById('taskForm');
             sidebar.innerHTML = `
                 <h2 id="sidebarTitle">Task Title</h2>
                 <p id="sidebarDetails">Task Description</p>
+                <form id="submissionForm">
+                    <input type="file" id="submissionFile" name="submissionFile">
+                    <h5>Add a description for your solution</h5>
+                    <textarea id="submissionDescription" name="submissionDescription" placeholder=""></textarea>
+                    <h5>Add a link to your github repository if possible</h5>
+                    <input type="url" id="submissionLink" name="submissionLink" placeholder="">
+                    <button type="submit">Submit</button>
+                </form>
+
                 <button id="closeSidebar" style="margin-bottom: 10px;">Close</button>
+
             `;
             document.body.appendChild(sidebar);
 
