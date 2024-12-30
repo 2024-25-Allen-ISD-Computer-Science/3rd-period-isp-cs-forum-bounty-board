@@ -5,10 +5,13 @@ body {
     color: #e0e0e0;
     font-weight: bold;
 }
-textarea{
+textarea {
     resize: none;
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
 }
-div{
+div {
     word-wrap: break-word;
 }
 h1 {
@@ -23,120 +26,119 @@ h1 {
 }
 .column {
     width: 30%;
-    background-image: linear-gradient( white, rgb(211, 211, 211));
+    background-color: #1e1e1e;
     padding: 10px;
     border-radius: 5px;
-    color: black;
+    color: #e0e0e0;
 }
 .column h2 {
     text-align: center;
+    color: #CCCCCC;
 }
 .task {
-    border: 4px solid darkcyan;
-    background-image: linear-gradient(lightblue, rgb(121, 168, 184));
+    border: 4px solid #e0e0e0;
+    background-color: #2a2a2a;
     margin: 10px 0;
     padding: 10px;
     border-radius: 20px;
     cursor: move;
+    color: #e0e0e0;
 }
 .task.dragging {
     opacity: 1;
 }
 button {
-    color: rgb(68, 68, 68);
-    border: 2px solid #000000;
-    border-radius: 20px; 
-    border-width: 0px;
+    color: #e0e0e0;
+    background-color: #333;
+    border: 2px solid #555;
+    border-radius: 20px;
     margin-left: 10px;
-    padding: 10px 20px; 
-    border-width: 0px;
-    margin-left: 10px;
+    padding: 10px 20px;
 }
 .popup {
-            display: none;
-            position: fixed;
-            z-index: 1;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            overflow: auto;
-            background-color: rgba(0,0,0,0.6);
-        }
-
-        .popup-content {
-            background-image: linear-gradient( white, rgb(227, 227, 227));
-            margin: 10% auto;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            width: 50%;
-            max-width: 600px;
-        }
-
-        .popup-content h2 {
-            margin-top: 0;
-            font-size: 24px;
-            text-align: center;
-        }
-
-        .popup-content input {
-            font-size: 12px;
-            width: 100%;
-            max-width: 593px ;
-        }
-        .popup-content textarea,
-        .popup-content select,
-        .popup-content button {
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            box-sizing: border-box;
-            background-image: linear-gradient(white, rgb(227, 227, 227));
-            font-size: 12px;
-        }
-
-        .popup-content button {
-            background-image: linear-gradient(#4CAF50, #3e9042);
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        .popup-content button:hover {
-            background-image: linear-gradient(#45a049, #255327 );
-            color: rgb(176, 176, 176);
-        }
-
-        .close {
-            color: #aaa;
-            float: right;
-            font-size: 28px;
-            font-weight: bold;
-        }
-
-        .close:hover,
-        .close:focus {
-            color: rgb(96, 96, 96);
-            text-decoration: none;
-            cursor: pointer;
-        }
-
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.6);
+}
+.popup-content {
+    background-color: #1e1e1e;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    width: 50%;
+    max-width: 600px;
+    color: #e0e0e0;
+}
+.popup-content h2 {
+    margin-top: 0;
+    font-size: 24px;
+    text-align: center;
+    color: #CCCCCC;
+}
+.popup-content input {
+    font-size: 12px;
+    width: 100%;
+    max-width: 593px;
+    background-color: #333;
+    color: #e0e0e0;
+    border: 1px solid #555;
+}
+.popup-content textarea,
+.popup-content select,
+.popup-content button {
+    width: 100%;
+    margin: 10px 0;
+    padding: 10px;
+    border: 1px solid #555;
+    border-radius: 5px;
+    box-sizing: border-box;
+    background-color: #333;
+    color: #e0e0e0;
+    font-size: 12px;
+}
+.popup-content button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+}
+.popup-content button:hover {
+    background-color: #45a049;
+    color: rgb(176, 176, 176);
+}
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: rgb(96, 96, 96);
+    text-decoration: none;
+    cursor: pointer;
+}
 #taskSidebar {
     position: fixed;
     top: 0;
-    right: -350px; 
+    right: -350px;
     width: 300px;
     height: 100%;
-    background-color: #f4f4f4;
-    border-left: 1px solid #ccc;
+    background-color: #1e1e1e;
+    border-left: 1px solid #555;
     box-shadow: -2px 0 5px rgba(0, 0, 0, 0.2);
     transition: right 0.3s ease;
     padding: 20px;
     overflow-y: auto;
     z-index: 1000;
+    color: #e0e0e0;
 }
 @keyframes gradientAnimation {
     0% {
@@ -165,7 +167,6 @@ button {
         transform: scale(1);
     }
 }
-
 .task {
     animation: taskAppear 0.5s ease-out;
 }
@@ -180,20 +181,17 @@ button {
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="100" viewBox="0 0 1000 100"><path fill="none" stroke="%23e0e0e0" stroke-width="2" d="M0 50 Q 250 0 500 50 T 1000 50" /></svg>') repeat-x;
     animation: sineWave 10s linear infinite;
 }
-
 .sine-wave:nth-child(2) {
     top: 25%;
     opacity: 0.3;
     animation-duration: 12s;
 }
-
 .sine-wave:nth-child(3) {
     top: 50%;
     opacity: 0.4;
     animation-duration: 14s;
     background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="1000" height="100" viewBox="0 0 1000 100"><path fill="none" stroke="%23e0e0e0" stroke-width="2" d="M0 50 Q 250 100 500 50 T 1000 50" /></svg>') repeat-x;
 }
-
 .sine-wave:nth-child(4) {
     top: 70%;
     opacity: 0.25;
@@ -204,7 +202,6 @@ button {
     opacity: 0.35;
     animation-duration: 16s;
 }
-
 .sine-wave:nth-child(6) {
     top: 95%;
     opacity: 0.2;
@@ -216,19 +213,16 @@ button {
     opacity: 0.3;
     animation-duration: 20s;
 }
-
 .sine-wave:nth-child(8) {
     top: 20%;
     opacity: 0.4;
     animation-duration: 22s;
 }
-
 .sine-wave:nth-child(9) {
     top: 30%;
     opacity: 0.35;
     animation-duration: 24s;
 }
-
 .sine-wave:nth-child(10) {
     top: 40%;
     opacity: 0.25;
