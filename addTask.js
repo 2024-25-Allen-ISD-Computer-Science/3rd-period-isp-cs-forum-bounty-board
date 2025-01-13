@@ -1,8 +1,22 @@
+import PocketBase from 'pocketbase';
+
+// const pb = new PocketBase('http://127.0.0.1:8090');
+
 const taskForm = document.getElementById('taskForm');
         const taskInput = document.getElementById('taskInput');
         const columns = document.querySelectorAll('.column');
         const taskDescriptionInput = document.getElementById('taskDescription')
         const fileInput = document.getElementById('taskFiles');
+        const taskDeadlineInput = document.getElementById('taskDeadline');
+        /*
+        const record = await pb.collection('bounty').create({
+            name: taskInput,
+            description: taskDescriptionInput,
+            organization: taskColumn.value,
+            additional_documents: fileInput,
+            date: taskDeadlineInput
+        });
+        */
 
         taskForm.addEventListener('submit', function(event) {
             event.preventDefault();
@@ -27,7 +41,7 @@ const taskForm = document.getElementById('taskForm');
                     taskFileLink.textContent = file.name;
                     task.appendChild(taskFileLink);
                 }
-                const taskDeadlineInput = document.getElementById('taskDeadline');
+                
                 const taskDeadline = document.createElement('strong');
                 taskDeadline.textContent = `Deadline: ${taskDeadlineInput.value}`;
                 task.appendChild(taskDeadline);
@@ -130,5 +144,3 @@ const taskForm = document.getElementById('taskForm');
             overlay.style.display = 'block'; // Show overlay
         }
     });
-
-    
