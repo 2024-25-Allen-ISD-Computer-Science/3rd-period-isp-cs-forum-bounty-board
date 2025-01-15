@@ -1,8 +1,9 @@
-
-// const pb = new PocketBase('http://127.0.0.1:8090');
-import PocketBase from 'pocketbase';
+import {PocketBase} from 'pocketbase';
+const pb = new PocketBase('http://127.0.0.1:8090');
 
 const taskForm = document.getElementById('taskForm');
+        
+        
         const taskInput = document.getElementById('taskInput');
         const columns = document.querySelectorAll('.column');
         const taskDescriptionInput = document.getElementById('taskDescription')

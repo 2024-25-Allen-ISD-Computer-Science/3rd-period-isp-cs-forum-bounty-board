@@ -20,5 +20,6 @@
   "bugs": {
     "url": "https://github.com/2024-25-Allen-ISD-Computer-Science/3rd-period-isp-cs-forum-bounty-board/issues"
   },
-  "homepage": "https://github.com/2024-25-Allen-ISD-Computer-Science/3rd-period-isp-cs-forum-bounty-board#readme"
+  "homepage": "https://github.com/2024-25-Allen-ISD-Computer-Science/3rd-period-isp-cs-forum-bounty-board#readme",
+  "type": "module"
 }
