@@ -13,7 +13,7 @@ app.get('/', function (req, res) {
 });
 
 // Use your existing CORS Anywhere proxy
-var cors_proxy = require('./cors-anywhere/lib/cors-anywhere');
+var cors_proxy = require('./node_modules/cors-anywhere');
 var host = process.env.HOST || '0.0.0.0';
 var port = process.env.PORT || 8080;
 
@@ -28,8 +28,7 @@ function parseEnvList(env) {
   return env.split(',');
 }
 
-var checkRateLimit = require('./cors-anywhere/lib/rate-limit')(process.env.CORSANYWHERE_RATELIMIT);
-
+var checkRateLimit = require('./node_modules/rate-limit')
 cors_proxy.createServer({
   originBlacklist: originBlacklist,
   originWhitelist: originWhitelist,
