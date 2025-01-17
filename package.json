@@ -4,8 +4,8 @@
     "cors-anywhere": "^0.4.4",
     "express": "^4.21.2",
     "http-server": "^14.1.1",
+    "pocketbase": "^0.25.0",
     "rate-limit": "^0.1.1",
-    "type": "module",
-    "homepage": "index.html"
+    "type": "module"
   }
 }
