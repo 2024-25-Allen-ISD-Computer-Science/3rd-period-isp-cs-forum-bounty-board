@@ -1,0 +1,10 @@
+{
+    "cors": {
+      "allowedOrigins": ["https://super-space-fortnight-76wrvqrqrggf4vj-3000.app.github.dev"],
+      "allowedMethods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+      "allowedHeaders": ["Content-Type", "Authorization"],
+      "exposedHeaders": [],
+      "allowCredentials": false,
+      "maxAge": 86400
+    }
+  }

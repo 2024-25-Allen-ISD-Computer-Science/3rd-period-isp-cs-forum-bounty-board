@@ -1,23 +1,34 @@
-import PocketBase from 'pocketbase';
-const pb = new PocketBase('http://127.0.0.1:8090');
+import PocketBase from './lib/pocketbase.es.mjs';
+    
+const pb = new PocketBase('https://super-space-fortnight-76wrvqrqrggf4vj-8090.app.github.dev');
+
+console.log('Connected to PocketBase:', pb);
+const data = {
+    "name": "test",
+    "description": "test",
+    "organization": "Main Forum",
+    "date": "test"
+};
+const record = await pb.collection('bounties').create(data);
 
 const taskForm = document.getElementById('taskForm');
         
-        
+       /*
         const taskInput = document.getElementById('taskInput');
         const columns = document.querySelectorAll('.column');
         const taskDescriptionInput = document.getElementById('taskDescription');
         const fileInput = document.getElementById('taskFiles');
         const taskDeadlineInput = document.getElementById('taskDeadline');
+        
         const record = await pb.collection('bounty').create({
             name: taskInput,
             description: taskDescriptionInput,
-            organization: taskColumn.value,
+            organization: "taskColumn.value",
             additional_documents: fileInput,
             date: taskDeadlineInput
         });
         console.log(record)
-        
+        */
 
         taskForm.addEventListener('submit', function(event) {
             event.preventDefault();

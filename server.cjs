@@ -1,58 +1,41 @@
-var express = require('express');
-var path = require('path');
+const express = require('express');
+const path = require('path');
 
-// Create an Express app
-var app = express();
+const app = express();
 
-// Serve static files from the "public" directory
+const PORT = process.env.PORT || 3000;
+
+const cors = require('cors');
+app.use(cors({ origin: '*' }));
+
+// Middleware to log requests for debugging
+app.use((req, res, next) => {
+    console.log(`${req.method} request for '${req.url}'`);
+    next();
+});
+
+// Serve static files from the "public" folder
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/src', express.static(path.join(__dirname, 'src')));
 
-// Handle requests for your static HTML files
-app.get('/', function (req, res) {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+
+// Handle a default route (root path)
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Use your existing CORS Anywhere proxy
-var cors_proxy = require('./node_modules/cors-anywhere');
-var host = process.env.HOST || '0.0.0.0';
-var port = process.env.PORT || 8080;
-
-// Grab the blacklist and whitelist
-var originBlacklist = parseEnvList(process.env.CORSANYWHERE_BLACKLIST);
-var originWhitelist = parseEnvList(process.env.CORSANYWHERE_WHITELIST);
-
-function parseEnvList(env) {
-  if (!env) {
-    return [];
-  }
-  return env.split(',');
-}
-
-var checkRateLimit = require('./node_modules/rate-limit')
-cors_proxy.createServer({
-  originBlacklist: originBlacklist,
-  originWhitelist: originWhitelist,
-  requireHeader: ['origin', 'x-requested-with'],
-  checkRateLimit: checkRateLimit,
-  removeHeaders: [
-    'cookie',
-    'cookie2',
-    'x-request-start',
-    'x-request-id',
-    'via',
-    'connect-time',
-    'total-route-time',
-  ],
-  redirectSameOrigin: true,
-  httpProxyOptions: {
-    xfwd: false,
-  },
-}).listen(port, host, function () {
-  console.log('CORS Anywhere running on ' + host + ':' + port);
+// Handle 404 errors (when a file is not found)
+app.use((req, res) => {
+    res.status(404).sendFile(path.join(__dirname, 'public', '404.html'));
 });
 
-// Start the Express app
-var htmlPort = process.env.HTML_PORT || 3000;
-app.listen(htmlPort, function () {
-  console.log('HTML server running on http://localhost:' + htmlPort);
+// Handle server errors (fallback)
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something went wrong! Please try again later.');
+});
+
+// Start the server
+app.listen(PORT, () => {
+    console.log(`Server is running at http://localhost:${PORT}`);
 });

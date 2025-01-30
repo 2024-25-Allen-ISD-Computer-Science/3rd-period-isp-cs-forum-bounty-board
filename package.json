@@ -6,5 +6,8 @@
     "http-server": "^14.1.1",
     "pocketbase": "^0.25.1",
     "rate-limit": "^0.1.1"
+  },
+  "devDependencies": {
+    "vite": "^6.0.11"
   }
 }
