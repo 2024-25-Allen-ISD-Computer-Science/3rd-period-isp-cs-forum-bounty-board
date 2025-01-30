@@ -1,6 +1,6 @@
 {
     "cors": {
-      "allowedOrigins": ["https://super-space-fortnight-76wrvqrqrggf4vj-3000.app.github.dev"],
+      "allowedOrigins": ["https://cautious-space-system-v9vr7qgjqgjfw749-3000.app.github.dev/"],
       "allowedMethods": ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       "allowedHeaders": ["Content-Type", "Authorization"],
       "exposedHeaders": [],

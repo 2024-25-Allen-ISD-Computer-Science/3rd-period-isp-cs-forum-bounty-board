@@ -1,6 +1,6 @@
 import PocketBase from './lib/pocketbase.es.mjs';
     
-const pb = new PocketBase('https://super-space-fortnight-76wrvqrqrggf4vj-8090.app.github.dev');
+const pb = new PocketBase('https://cautious-space-system-v9vr7qgjqgjfw749-8090.app.github.dev/');
 
 console.log('Connected to PocketBase:', pb);
 const data = {
