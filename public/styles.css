@@ -5,6 +5,18 @@ body {
     color: #e0e0e0;
     font-weight: bold;
 }
+a:link {
+    color:#555;
+}
+a:visited {
+    color:#2a2a2a;
+}
+a:hover, a:active {
+    color:#333;
+}
+li {
+    list-style-type: square;
+}
 textarea {
     resize: none;
     background-color: #333;
