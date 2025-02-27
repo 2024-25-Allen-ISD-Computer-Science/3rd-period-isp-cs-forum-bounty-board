@@ -9,17 +9,18 @@ const data = {
     "organization": "Main Forum",
     "date": "test"
 };
-const record = await pb.collection('bounties').create(data);
+//const record = await pb.collection('bounties').create(data);
 
 const taskForm = document.getElementById('taskForm');
         
-       /*
+       
         const taskInput = document.getElementById('taskInput');
         const columns = document.querySelectorAll('.column');
         const taskDescriptionInput = document.getElementById('taskDescription');
         const fileInput = document.getElementById('taskFiles');
         const taskDeadlineInput = document.getElementById('taskDeadline');
-        
+        const taskColumn = document.getElementById('taskColumn'); 
+        /*
         const record = await pb.collection('bounty').create({
             name: taskInput,
             description: taskDescriptionInput,

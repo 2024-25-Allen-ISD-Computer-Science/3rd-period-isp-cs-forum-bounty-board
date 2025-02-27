@@ -1,42 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Leader Panel</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
-    <h1>Leader Panel</h1>
-    <nav>
-        <ul>
-            <li><a href="index.html">User Page</a></li>
-            <li><a href="leader.html">Leader Page</a></li>
-            <li><a href="admin.html">Admin Page</a></li>
-        </ul>
-    </nav>
-    <button id="uploadBountyButton">Upload New Bounty</button>
-    <div id="bountyUploadPopup" class="popup">
-        <div class="popup-content">
-            <span class="close">&times;</span>
-            <form id="bountyUploadForm">
-                <h2>Upload Bounty</h2>
-                <input type="text" id="bountyTitle" placeholder="Bounty Title" required>
-                <textarea id="bountyDescription" placeholder="Enter bounty details" required></textarea>
-                <button type="submit">Submit</button>
-            </form>
+    <script type="module"></script>
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CS Forum Bounty Board</title>
+        <link rel="stylesheet" href="styles.css">
+        <link href='https://fonts.googleapis.com/css?family=Agdasima' rel='stylesheet'>
+    </head>
+    <body>
+        <h1>CS Forum Bounty Board</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html">User Page</a></li>
+                <li><a href="leader.html">Leader Page</a></li>
+                <li><a href="admin.html">Admin Page</a></li>
+            </ul>
+        </nav>
+        <button id="openFormButton">Add New Task</button>
+        <div id="taskFormPopup" class="popup">
+            <div class="popup-content">
+                <span class="close">&times;</span>
+                <form id="taskForm">
+                    <h2>Add New Task</h2>
+                    <input type="text" id="taskInput" placeholder="Enter a new task" maxlength="35" required>
+                    <textarea id="taskDescription" placeholder="Enter task description" maxlength="200" required></textarea>
+                    <select id="taskColumn" required>
+                        <option value="mainForum">Main Forum</option>
+                        <option value="cyberSecurity">CyberSecurity</option>
+                        <option value="cshs">Computer Science Honor Society</option>
+                    </select>
+                    <label for="taskFiles">Additional Documents:</label>
+                    <input type="file" id="taskFiles" name="taskFiles" multiple>
+                    <label for="taskDeadline">Deadline:</label>
+                    <input type="date" id="taskDeadline" name="taskDeadline" required>
+                    <button type="submit">Add Task</button>
+                </form>
+            </div>
         </div>
-    </div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-    <div class="sine-wave"></div>
-</body>
+        <script type="module" src="/src/taskMake.js"></script>
+        <div class="board">
+            <div class="column" id="mainForum">
+                <h2>Main Forum</h2>
+            </div>
+            <div class="column" id="cyberSecurity">
+                <h2>CyberSecurity</h2>
+            </div>
+            <div class="column" id="cshs">
+                <h2>Computer Science Honor Society</h2>
+            </div>
+        </div>
+        <script type="module" src="addTask.js"></script>
+        
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+        <div class="sine-wave"></div>
+    </body>
 </html>
