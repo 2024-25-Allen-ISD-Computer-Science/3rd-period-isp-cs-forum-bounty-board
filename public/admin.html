@@ -4,30 +4,74 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
+    <title>Admin Dashboard - CS Forum Bounty Board</title>
     <link rel="stylesheet" href="styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Agdasima' rel='stylesheet'>
 </head>
 <body>
-    <h1>Admin Panel</h1>
+    <h1>Admin Dashboard</h1>
     <nav>
-        <ul>
-            <li><a href="index.html">User Page</a></li>
-            <li><a href="leader.html">Leader Page</a></li>
-            <li><a href="admin.html">Admin Page</a></li>
-        </ul>
+        <a href="index.html"><h1>User Page</h1></a>
+        <a href="leader.html"><h1>Leader Page</h1></a>
+        <a href="admin.html"><h1>Admin Page</h1></a>
     </nav>
-    <button id="addClubButton">Add New Club</button>
-    <button id="removeClubButton">Remove Club</button>
-    <div id="clubManagementPopup" class="popup">
+
+    <div class="admin-controls">
+        <button id="createTaskButton">Create Task</button>
+        <button id="createClubButton">Create Club</button>
+    </div>
+
+    <!-- Task Creation Popup -->
+    <div id="taskFormPopup" class="popup">
         <div class="popup-content">
             <span class="close">&times;</span>
-            <form id="clubManagementForm">
-                <h2>Manage Clubs</h2>
-                <input type="text" id="clubName" placeholder="Enter club name" required>
-                <button type="submit">Submit</button>
+            <form id="taskForm">
+                <h2>Create New Task</h2>
+                <input type="text" id="taskInput" placeholder="Enter task title" maxlength="35" required>
+                <textarea id="taskDescription" placeholder="Enter task description" maxlength="200" required></textarea>
+                <select id="taskColumn" required>
+                    <option value="mainForum">Main Forum</option>
+                    <option value="cyberSecurity">CyberSecurity</option>
+                    <option value="cshs">Computer Science Honor Society</option>
+                </select>
+                <label for="taskFiles">Additional Documents:</label>
+                <input type="file" id="taskFiles" name="taskFiles" multiple>
+                <label for="taskDeadline">Deadline:</label>
+                <input type="date" id="taskDeadline" name="taskDeadline" required>
+                <button type="submit">Create Task</button>
             </form>
         </div>
     </div>
+
+    <!-- Club Creation Popup -->
+    <div id="clubFormPopup" class="popup">
+        <div class="popup-content">
+            <span class="close">&times;</span>
+            <form id="clubForm">
+                <h2>Create New Club</h2>
+                <input type="text" id="clubName" placeholder="Enter club name" maxlength="35" required>
+                <textarea id="clubDescription" placeholder="Enter club description" maxlength="200" required></textarea>
+                <label for="clubLeader">Club Leader:</label>
+                <input type="email" id="clubLeader" placeholder="Enter leader's email" required>
+                <button type="submit">Create Club</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="board">
+        <div class="column" id="mainForum">
+            <h2>Main Forum</h2>
+        </div>
+        <div class="column" id="cyberSecurity">
+            <h2>CyberSecurity</h2>
+        </div>
+        <div class="column" id="cshs">
+            <h2>Computer Science Honor Society</h2>
+        </div>
+    </div>
+
+    <script type="module" src="admin.js"></script>
+
     <div class="sine-wave"></div>
     <div class="sine-wave"></div>
     <div class="sine-wave"></div>
