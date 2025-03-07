@@ -1,3 +1,9 @@
+import PocketBase from './lib/pocketbase.es.mjs';
+    
+const pb = new PocketBase('https://cautious-space-system-v9vr7qgjqgjfw749-8090.app.github.dev');
+
+console.log('Connected to PocketBase:', pb);
+
 document.addEventListener('DOMContentLoaded', () => {
     const createTaskButton = document.getElementById('createTaskButton');
     const createClubButton = document.getElementById('createClubButton');
