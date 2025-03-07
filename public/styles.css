@@ -261,7 +261,7 @@ button:hover {
     }
 }
 body {
-    overflow: hidden;
+    overflow: auto;
 }
 .admin-controls, .leader-controls {
     margin: 20px;
