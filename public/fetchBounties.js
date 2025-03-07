@@ -5,10 +5,20 @@ console.log('Connected to PocketBase:', pb);
 
 async function fetchBounties() {
     try {
-        const bounties = await pb.collection('bounties').getFullList(); // Replace 'bounties' with your collection name
-        displayBounties(bounties);
+        const response = await fetch('https://api.example.com/bounties', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // Add any other headers you need
+            },
+        });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        displayBounties(data);
     } catch (error) {
-        console.error('Error fetching bounties:', error);
+        console.error('There was a problem with the fetch operation:', error);
     }
 }
 
@@ -16,22 +26,17 @@ function displayBounties(bounties) {
     const mainForumColumn = document.getElementById('mainForum');
     const cyberSecurityColumn = document.getElementById('cyberSecurity');
     const cshsColumn = document.getElementById('cshs');
-    
-    mainForumColumn.innerHTML = '<h2>Main Forum</h2>';
-    cyberSecurityColumn.innerHTML = '<h2>CyberSecurity</h2>';
-    cshsColumn.innerHTML = '<h2>Computer Science Honor Society</h2>';
-    const sampleBounty = {
-        name: 'Sample Bounty',
-        description: 'This is a sample bounty for testing purposes.',
-        date: '2023-12-31',
-        organization: 'mainForum'
-    };
-    bounties.push(sampleBounty);
+
+    // Clear existing content
+    mainForumColumn.innerHTML = '<h2 class="column-title">Main Forum</h2>';
+    cyberSecurityColumn.innerHTML = '<h2 class="column-title">CyberSecurity</h2>';
+    cshsColumn.innerHTML = '<h2 class="column-title">Computer Science Honor Society</h2>';
+
     bounties.forEach(bounty => {
         const bountyElement = document.createElement('div');
-        bountyElement.className = 'bounty';
+        bountyElement.className = 'bounty bg-gray-700 text-white p-4 rounded-lg mb-4'; // Match styling
         bountyElement.innerHTML = `
-            <h3>${bounty.name}</h3>
+            <h3 class="text-xl font-bold">${bounty.name}</h3>
             <p>${bounty.description}</p>
             <p>Deadline: ${bounty.date}</p>
         `;

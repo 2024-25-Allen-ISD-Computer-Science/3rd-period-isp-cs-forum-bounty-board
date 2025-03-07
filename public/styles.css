@@ -4,15 +4,16 @@ body {
     background-color: #121212;
     color: #e0e0e0;
     font-weight: bold;
+    overflow: scroll;
 }
 a:link {
-    color:#555;
+    color:#707070;
 }
 a:visited {
-    color:#2a2a2a;
+    color:#545454;
 }
 a:hover, a:active {
-    color:#333;
+    color:#333333;
 }
 li {
     list-style-type: square;
@@ -37,6 +38,7 @@ h1 {
     margin: 20px;
     gap: 20px;
     flex-wrap: wrap;
+    flex-direction: row;
 }
 .column {
     flex: 1;
@@ -65,12 +67,19 @@ h1 {
     opacity: 1;
 }
 button {
-    color: #e0e0e0;
-    background-color: #333;
-    border: 2px solid #555;
-    border-radius: 20px;
+    color: #ffffff;
+    background-color: #4CAF50;
+    border: 2px solid #ffffff;
+    border-radius: 5px;
     margin-left: 10px;
     padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s;
+}
+button:hover {
+    background-color: #45a049;
+    transform: scale(1.05);
 }
 .popup {
     display: none;
@@ -86,12 +95,12 @@ button {
     position: relative;
     background-color: #1e1e1e;
     margin: 10% auto;
-    padding: 30px;
-    border: 1px solid #333;
+    padding: 20px;
+    border: 1px solid #555;
     width: 80%;
     max-width: 500px;
     border-radius: 5px;
-    color: #e0e0e0;
+    color: #ffffff;
 }
 .popup-content h2 {
     margin: 0 0 20px 0;
@@ -99,26 +108,24 @@ button {
     text-align: center;
     color: #CCCCCC;
 }
-.popup-content input {
-    font-size: 12px;
-    width: 100%;
-    max-width: 593px;
-    background-color: #333;
-    color: #e0e0e0;
-    border: 1px solid #555;
-}
+.popup-content input,
 .popup-content textarea,
-.popup-content select,
-.popup-content button {
+.popup-content select {
     width: 100%;
     margin: 10px 0;
     padding: 10px;
     border: 1px solid #555;
     border-radius: 5px;
     box-sizing: border-box;
-    background-color: #333;
-    color: #e0e0e0;
+    background-color: #2a2a2a;
+    color: #ffffff;
     font-size: 12px;
+}
+.popup-content input:focus,
+.popup-content textarea:focus,
+.popup-content select:focus {
+    border-color: #60a5fa;
+    outline: none;
 }
 .popup-content button {
     background-color: #4CAF50;
@@ -254,7 +261,7 @@ button {
     }
 }
 body {
-    overflow: hidden;
+    overflow: auto;
 }
 .admin-controls, .leader-controls {
     margin: 20px;
@@ -272,11 +279,11 @@ form {
     gap: 15px;
 }
 form input, form textarea, form select {
-    padding: 0px;
-    margin: 5px 0;
+    padding: 10px;
+    margin: 10px 0;
     background-color: #2a2a2a;
-    border: 1px solid #444;
-    color: #e0e0e0;
+    border: 1px solid #555;
+    color: #ffffff;
     border-radius: 4px;
     width: 100%;
     box-sizing: border-box;
@@ -322,3 +329,51 @@ form button:hover {
     color: #CCCCCC;
     font-size: 0.9em;
 }
+body.dark-mode {
+    background-color: #1a202c;
+    color: #ffffff;
+}
+.title {
+    font-size: 2.5rem;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 2.5rem;
+    color: #f0f0f0;
+}
+.nav {
+    display: flex;
+    justify-content: center;
+    margin-top: 1.25rem;
+    gap: 1rem;
+}
+.nav-link {
+    font-size: 1.25rem;
+    color: #ffffff;
+    text-decoration: underline;
+    transition: color 0.3s, text-shadow 0.3s;
+    font-weight: 500;
+}
+.nav-link:hover {
+    text-decoration: none;
+    color: #93c5fd;
+    text-shadow: 0 0 5px #ffffff;
+}
+.columns {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2.5rem;
+}
+.column {
+    background-color: #2d3748;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    border-radius: 0.5rem;
+    width: 30%;
+    color: #ffffff;
+}
+.column-title {
+    font-size: 1.75rem;
+    font-weight: 600;
+    color: #f0f0f0;
+    
+}
+
