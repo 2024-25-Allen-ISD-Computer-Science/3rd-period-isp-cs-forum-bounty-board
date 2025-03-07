@@ -1,11 +1,19 @@
 {
+  "name": "cs-forum-bounty-board",
+  "version": "1.0.0",
+  "description": "CS Forum Bounty Board",
+  "main": "index.js",
+  "scripts": {
+    "start": "serve -s public -l 3000"
+  },
   "dependencies": {
     "cors": "^2.8.5",
     "cors-anywhere": "^0.4.4",
     "express": "^4.21.2",
     "http-server": "^14.1.1",
     "pocketbase": "^0.25.1",
-    "rate-limit": "^0.1.1"
+    "rate-limit": "^0.1.1",
+    "serve": "^14.2.1"
   },
   "devDependencies": {
     "vite": "^6.0.11"

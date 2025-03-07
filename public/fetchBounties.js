@@ -1,23 +1,17 @@
 import PocketBase from './lib/pocketbase.es.mjs';
 
-const pb = new PocketBase('https://cautious-space-system-v9vr7qgjqgjfw749-8090.app.github.dev');
+const pb = new PocketBase('http://localhost:8090');
 console.log('Connected to PocketBase:', pb);
+
 async function fetchBounties() {
     try {
-        const response = await fetch('https://api.example.com/bounties', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any other headers you need
-            },
+        const records = await pb.collection('bounties').getFullList({
+            sort: '-created'
         });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        displayBounties(data);
+        console.log('Fetched bounties:', records);
+        displayBounties(records);
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error('Error fetching bounties:', error);
     }
 }
 
@@ -26,18 +20,19 @@ function displayBounties(bounties) {
     const cyberSecurityColumn = document.getElementById('cyberSecurity');
     const cshsColumn = document.getElementById('cshs');
 
-    // Clear existing content
+    // Clear existing content but keep the headers
     mainForumColumn.innerHTML = '<h2 class="column-title">Main Forum</h2>';
     cyberSecurityColumn.innerHTML = '<h2 class="column-title">CyberSecurity</h2>';
     cshsColumn.innerHTML = '<h2 class="column-title">Computer Science Honor Society</h2>';
 
     bounties.forEach(bounty => {
         const bountyElement = document.createElement('div');
-        bountyElement.className = 'bounty bg-gray-700 text-white p-4 rounded-lg mb-4'; // Match styling
+        bountyElement.className = 'task';
+        bountyElement.draggable = true;
         bountyElement.innerHTML = `
-            <h3 class="text-xl font-bold">${bounty.name}</h3>
+            <h2>${bounty.name}</h2>
             <p>${bounty.description}</p>
-            <p>Deadline: ${bounty.date}</p>
+            <strong>Deadline: ${bounty.date}</strong>
         `;
 
         switch (bounty.organization) {
@@ -55,5 +50,20 @@ function displayBounties(bounties) {
         }
     });
 }
+
+// Add a function to create new bounties
+async function createBounty(bountyData) {
+    try {
+        const record = await pb.collection('bounties').create(bountyData);
+        console.log('Created bounty:', record);
+        // Refresh the bounties display
+        fetchBounties();
+    } catch (error) {
+        console.error('Error creating bounty:', error);
+    }
+}
+
+// Export the createBounty function if needed by other modules
+window.createBounty = createBounty;
 
 document.addEventListener('DOMContentLoaded', fetchBounties);
