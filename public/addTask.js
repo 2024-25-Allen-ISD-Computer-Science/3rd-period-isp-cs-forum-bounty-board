@@ -1,159 +1,232 @@
 import PocketBase from './lib/pocketbase.es.mjs';
-    
-const pb = new PocketBase('https://cautious-space-system-v9vr7qgjqgjfw749-8090.app.github.dev');
 
+const pb = new PocketBase('http://localhost:8090');
 console.log('Connected to PocketBase:', pb);
-const data = {
-    "name": "test",
-    "description": "test",
-    "organization": "Main Forum",
-    "date": "test"
-};
-//const record = await pb.collection('bounties').create(data);
 
-const taskForm = document.getElementById('taskForm');
-        
-       
-        const taskInput = document.getElementById('taskInput');
-        const columns = document.querySelectorAll('.column');
-        const taskDescriptionInput = document.getElementById('taskDescription');
-        const fileInput = document.getElementById('taskFiles');
-        const taskDeadlineInput = document.getElementById('taskDeadline');
-        const taskColumn = document.getElementById('taskColumn'); 
-        /*
-        const record = await pb.collection('bounty').create({
-            name: taskInput,
-            description: taskDescriptionInput,
-            organization: "taskColumn.value",
-            additional_documents: fileInput,
-            date: taskDeadlineInput
+document.addEventListener('DOMContentLoaded', () => {
+    const taskForm = document.getElementById('taskForm');
+    const addBountyBtn = document.getElementById('addBountyBtn');
+    const bountyFormPopup = document.getElementById('bountyFormPopup');
+    const closeBtn = document.querySelector('.close');
+    const columns = document.querySelectorAll('.column');
+
+    // Show/Hide Popup
+    if (addBountyBtn) {
+        addBountyBtn.addEventListener('click', () => {
+            bountyFormPopup.style.display = 'block';
         });
-        console.log(record)
-        */
+    }
 
-        taskForm.addEventListener('submit', function(event) {
-            event.preventDefault();
-            const taskText = taskInput.value;
-            if (taskText) {
+    if (closeBtn) {
+        closeBtn.addEventListener('click', () => {
+            bountyFormPopup.style.display = 'none';
+        });
+    }
+
+    // Handle form submission
+    if (taskForm) {
+        taskForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            try {
+                // Get form values
+                const taskInput = document.getElementById('taskInput');
+                const taskDescription = document.getElementById('taskDescription');
+                const taskDeadline = document.getElementById('taskDeadline');
+                const taskColumn = document.getElementById('taskColumn');
+                const taskFiles = document.getElementById('taskFiles');
+
+                console.log('Raw taskColumn element:', taskColumn);
+                console.log('taskColumn value:', taskColumn ? taskColumn.value : 'Element not found');
+
+                // Validate form data
+                if (!taskInput.value || !taskDescription.value || !taskDeadline.value || !taskColumn || !taskColumn.value) {
+                    throw new Error('All fields are required');
+                }
+
+                // Create FormData for file upload
+                const formData = new FormData();
+                formData.append('name', taskInput.value.trim());
+                formData.append('description', taskDescription.value.trim());
+                
+                // Map the column value to the correct organization name
+                const organizationMap = {
+                    'mainforum': 'Main Forum',
+                    'cybersecurity': 'Cybersecurity',
+                    'cshs': 'CSHS'
+                };
+
+                const selectedOrg = organizationMap[taskColumn.value.toLowerCase()] || taskColumn.value;
+                console.log('Selected organization:', selectedOrg);
+                console.log('Organization mapping:', organizationMap);
+                console.log('taskColumn.value:', taskColumn.value);
+
+                formData.append('organization', selectedOrg);
+                formData.append('date', taskDeadline.value);
+                
+                // Add file if one was selected
+                if (taskFiles.files.length > 0) {
+                    formData.append('additional_documents', taskFiles.files[0]);
+                }
+
+                console.log('Attempting to create bounty with data:', Object.fromEntries(formData));
+
+                // Save to PocketBase using FormData
+                const record = await pb.collection('bounties').create(formData);
+                console.log('Created bounty:', record);
+
+                // Create visual task element
                 const task = document.createElement('div');
                 task.classList.add('task');
                 task.draggable = true;
-                task.clickable = true;
-                const taskName = document.createElement('h2'); 
-                taskName.textContent = taskInput.value;
-                task.append(taskName);
-                const taskDescription = document.createElement('p');
-                taskDescription.textContent = taskDescriptionInput.value;
-                task.appendChild(taskDescription);
-                if (fileInput.files.length > 0) {
-                    const file = fileInput.files[0];
-                    const url = URL.createObjectURL(file);
-                    const taskFileLink = document.createElement('a');
-                    taskFileLink.href = url;
-                    taskFileLink.download = file.name;
-                    taskFileLink.textContent = file.name;
-                    task.appendChild(taskFileLink);
-                }
+                task.setAttribute('data-id', record.id);
                 
-                const taskDeadline = document.createElement('strong');
-                taskDeadline.textContent = `Deadline: ${taskDeadlineInput.value}`;
-                task.appendChild(taskDeadline);
-                document.getElementById(taskColumn.value).appendChild(task);
-                taskInput.value = '';
+                task.innerHTML = `
+                    <h2>${record.name}</h2>
+                    <p>${record.description}</p>
+                    <strong>Deadline: ${record.date}</strong>
+                `;
+
+                // Add to appropriate column - convert organization name to column ID format
+                const columnId = record.organization.toLowerCase()
+                                                  .replace(/main forum/, 'mainforum')
+                                                  .replace(/cybersecurity/, 'cybersecurity')
+                                                  .replace(/cshs/, 'cshs')
+                                                  .replace(/\s+/g, '');
+                console.log('Looking for column with ID:', columnId);
+                const targetColumn = document.getElementById(columnId);
+                if (targetColumn) {
+                    targetColumn.appendChild(task);
+                } else {
+                    console.error('Column not found for organization:', record.organization);
+                }
+
+                // Add drag and drop functionality
                 addDragAndDropEvents(task);
+
+                // Reset form and close popup
+                taskForm.reset();
+                bountyFormPopup.style.display = 'none';
+                
+                alert('Bounty created successfully!');
+            } catch (error) {
+                console.error('Error details:', error);
+                if (error.response) {
+                    console.error('Server response:', error.response);
+                    alert(`Failed to create bounty: ${error.response.message}`);
+                } else {
+                    alert(`Failed to create bounty: ${error.message}`);
+                }
             }
         });
+    }
 
-        function addDragAndDropEvents(task) {
-            task.addEventListener('dragstart', function() {
-                task.classList.add('dragging');
-            });
-
-            task.addEventListener('dragend', function() {
-                task.classList.remove('dragging');
-            });
-
-            columns.forEach(column => {
-                column.addEventListener('dragover', function(event) {
-                    event.preventDefault();
-                    const draggingTask = document.querySelector('.dragging');
-                    column.appendChild(draggingTask);
-                });
-            });
-        }
-        document.addEventListener('DOMContentLoaded', () => {
-            const openFormButton = document.getElementById('openFormButton');
-            const taskFormPopup = document.getElementById('taskFormPopup');
-            const closeButton = document.querySelector('.close');
-
-            openFormButton.addEventListener('click', () => {
-                taskFormPopup.style.display = 'block';
-            });
-
-            closeButton.addEventListener('click', () => {
-                taskFormPopup.style.display = 'none';
-            });
-
-            window.addEventListener('click', (event) => {
-                if (event.target == taskFormPopup) {
-                    taskFormPopup.style.display = 'none';
-                }
-            });
-
-          
-            const sidebar = document.createElement('div');
-            sidebar.id = 'taskSidebar';
-            
-            sidebar.innerHTML = `
-                <h2 id="sidebarTitle">Task Title</h2>
-                <p id="sidebarDetails">Task Description</p>
-                <form id="submissionForm">
-                    <input type="file" id="submissionFile" name="submissionFile">
-                    <h5>Add a description for your solution</h5>
-                    <textarea id="submissionDescription" name="submissionDescription" placeholder=""></textarea>
-                    <h5>Add a link to your github repository if possible</h5>
-                    <input type="url" id="submissionLink" name="submissionLink" placeholder="">
-                    <button type="submit">Submit</button>
-                </form>
-
-                <button id="closeSidebar" style="margin-bottom: 10px;">Close</button>
-
-            `;
-            document.body.appendChild(sidebar);
-
-            document.getElementById('closeSidebar').addEventListener('click', () => {
-                sidebar.style.right = '-350px'; 
-                overlay.style.display = 'none'; 
-            });
-
-            document.addEventListener('click', (event) => {
-                const task = event.target.closest('.task');
-                if (task) {
-                    const taskTitle = task.querySelector('h2').innerText;
-                    const taskDescription = task.querySelector('p').innerText;
-                    document.getElementById('sidebarTitle').innerText = taskTitle;
-                    document.getElementById('sidebarDetails').innerText = taskDescription;
-                    sidebar.style.right = '0'; 
-                }
-            });
+    function addDragAndDropEvents(task) {
+        task.addEventListener('dragstart', function() {
+            task.classList.add('dragging');
         });
-    const overlay = document.createElement('div');
-    overlay.id = 'overlay';
-    overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        z-index: 999;
-    `;
-    document.body.appendChild(overlay);
 
-    document.addEventListener('click', (event) => {
-        const task = event.target.closest('.task');
-        if (task) {
-            overlay.style.display = 'block'; // Show overlay
-        }
+        task.addEventListener('dragend', async function() {
+            task.classList.remove('dragging');
+            
+            // Get the new column (parent element) and update the organization in PocketBase
+            const newColumn = task.parentElement;
+            if (newColumn && newColumn.id) {
+                // Map column ID back to organization name
+                const reverseOrganizationMap = {
+                    'mainforum': 'Main Forum',
+                    'cybersecurity': 'Cybersecurity',
+                    'cshs': 'CSHS'
+                };
+                
+                const newOrg = reverseOrganizationMap[newColumn.id];
+                if (newOrg) {
+                    try {
+                        // Get the bounty ID from a data attribute
+                        const bountyId = task.getAttribute('data-id');
+                        if (bountyId) {
+                            await pb.collection('bounties').update(bountyId, {
+                                organization: newOrg
+                            });
+                            console.log('Updated bounty organization to:', newOrg);
+                        }
+                    } catch (error) {
+                        console.error('Error updating bounty organization:', error);
+                    }
+                }
+            }
+        });
+    }
+
+    columns.forEach(column => {
+        column.addEventListener('dragover', function(event) {
+            event.preventDefault();
+            const afterElement = getDragAfterElement(column, event.clientY);
+            const draggingTask = document.querySelector('.dragging');
+            if (draggingTask) {
+                if (afterElement) {
+                    column.insertBefore(draggingTask, afterElement);
+                } else {
+                    column.appendChild(draggingTask);
+                }
+            }
+        });
     });
+
+    function getDragAfterElement(column, y) {
+        const draggableElements = [...column.querySelectorAll('.task:not(.dragging)')];
+        
+        return draggableElements.reduce((closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
+            
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        }, { offset: Number.NEGATIVE_INFINITY }).element;
+    }
+
+    // Load existing bounties
+    async function loadBounties() {
+        try {
+            const records = await pb.collection('bounties').getFullList({
+                sort: '-created'
+            });
+            
+            records.forEach(bounty => {
+                const task = document.createElement('div');
+                task.classList.add('task');
+                task.draggable = true;
+                task.setAttribute('data-id', bounty.id);
+                
+                task.innerHTML = `
+                    <h2>${bounty.name}</h2>
+                    <p>${bounty.description}</p>
+                    <strong>Deadline: ${bounty.date}</strong>
+                `;
+
+                // Convert organization name to column ID format
+                const columnId = bounty.organization.toLowerCase()
+                                                  .replace(/main forum/, 'mainforum')
+                                                  .replace(/cybersecurity/, 'cybersecurity')
+                                                  .replace(/cshs/, 'cshs')
+                                                  .replace(/\s+/g, '');
+                console.log('Loading bounty into column:', columnId);
+                const targetColumn = document.getElementById(columnId);
+                if (targetColumn) {
+                    targetColumn.appendChild(task);
+                    addDragAndDropEvents(task);
+                } else {
+                    console.error('Column not found for organization:', bounty.organization);
+                }
+            });
+        } catch (error) {
+            console.error('Error loading bounties:', error);
+        }
+    }
+
+    // Load existing bounties when the page loads
+    loadBounties();
+});

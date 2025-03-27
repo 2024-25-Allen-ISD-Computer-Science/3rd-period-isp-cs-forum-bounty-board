@@ -1,24 +1,17 @@
 import PocketBase from './lib/pocketbase.es.mjs';
 
-const pb = new PocketBase('https://cautious-space-system-v9vr7qgjqgjfw749-8090.app.github.dev');
+const pb = new PocketBase('http://localhost:8090');
 console.log('Connected to PocketBase:', pb);
 
 async function fetchBounties() {
     try {
-        const response = await fetch('https://api.example.com/bounties', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // Add any other headers you need
-            },
+        const records = await pb.collection('bounties').getFullList({
+            sort: '-created'
         });
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        const data = await response.json();
-        displayBounties(data);
+        console.log('Fetched bounties:', records);
+        displayBounties(records);
     } catch (error) {
-        console.error('There was a problem with the fetch operation:', error);
+        console.error('Error fetching bounties:', error);
     }
 }
 
@@ -27,18 +20,19 @@ function displayBounties(bounties) {
     const cyberSecurityColumn = document.getElementById('cyberSecurity');
     const cshsColumn = document.getElementById('cshs');
 
-    // Clear existing content
+    // Clear existing content but keep the headers
     mainForumColumn.innerHTML = '<h2 class="column-title">Main Forum</h2>';
     cyberSecurityColumn.innerHTML = '<h2 class="column-title">CyberSecurity</h2>';
     cshsColumn.innerHTML = '<h2 class="column-title">Computer Science Honor Society</h2>';
 
     bounties.forEach(bounty => {
         const bountyElement = document.createElement('div');
-        bountyElement.className = 'bounty bg-gray-700 text-white p-4 rounded-lg mb-4'; // Match styling
+        bountyElement.className = 'task';
+        bountyElement.draggable = true;
         bountyElement.innerHTML = `
-            <h3 class="text-xl font-bold">${bounty.name}</h3>
+            <h2>${bounty.name}</h2>
             <p>${bounty.description}</p>
-            <p>Deadline: ${bounty.date}</p>
+            <strong>Deadline: ${bounty.date}</strong>
         `;
 
         switch (bounty.organization) {
@@ -57,75 +51,19 @@ function displayBounties(bounties) {
     });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-    fetchBounties();
+// Add a function to create new bounties
+async function createBounty(bountyData) {
+    try {
+        const record = await pb.collection('bounties').create(bountyData);
+        console.log('Created bounty:', record);
+        // Refresh the bounties display
+        fetchBounties();
+    } catch (error) {
+        console.error('Error creating bounty:', error);
+    }
+}
 
-    const overlay = document.createElement('div');
-    overlay.id = 'overlay';
-    overlay.style.cssText = `
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-        display: none;
-        z-index: 999;
-    `;
-    document.body.appendChild(overlay);
+// Export the createBounty function if needed by other modules
+window.createBounty = createBounty;
 
-    const sidebar = document.createElement('div');
-    sidebar.id = 'taskSidebar';
-    sidebar.innerHTML = `
-        <h2 id="sidebarTitle">Task Title</h2>
-        <p id="sidebarDetails">Task Description</p>
-        <form id="submissionForm">
-            <input type="file" id="submissionFile" name="submissionFile">
-            <h5>Add a description for your solution</h5>
-            <textarea id="submissionDescription" name="submissionDescription" placeholder=""></textarea>
-            <h5>Add a link to your github repository if possible</h5>
-            <input type="url" id="submissionLink" name="submissionLink" placeholder="">
-            <button type="submit">Submit</button>
-        </form>
-        <button id="closeSidebar" style="margin-bottom: 10px;">Close</button>
-    `;
-    document.body.appendChild(sidebar);
-
-    document.getElementById('closeSidebar').addEventListener('click', () => {
-        sidebar.style.right = '-350px'; 
-        overlay.style.display = 'none'; 
-    });
-
-    document.addEventListener('click', (event) => {
-        const bounty = event.target.closest('.bounty');
-        if (bounty) {
-            const bountyTitle = bounty.querySelector('h3').innerText;
-            const bountyDescription = bounty.querySelector('p').innerText;
-            document.getElementById('sidebarTitle').innerText = bountyTitle;
-            document.getElementById('sidebarDetails').innerText = bountyDescription;
-            sidebar.style.right = '0'; 
-            overlay.style.display = 'block'; // Show overlay
-        }
-    });
-
-    document.getElementById('submissionForm').addEventListener('submit', async (event) => {
-        event.preventDefault();
-        const submissionFile = document.getElementById('submissionFile').files[0];
-        const submissionDescription = document.getElementById('submissionDescription').value;
-        const submissionLink = document.getElementById('submissionLink').value;
-
-        const formData = new FormData();
-        formData.append('file', submissionFile);
-        formData.append('description', submissionDescription);
-        formData.append('link', submissionLink);
-
-        try {
-            const response = await pb.collection('submissions').create(formData);
-            console.log('Submission successful:', response);
-            sidebar.style.right = '-350px'; 
-            overlay.style.display = 'none'; 
-        } catch (error) {
-            console.error('Error submitting:', error);
-        }
-    });
-});
+document.addEventListener('DOMContentLoaded', fetchBounties);
