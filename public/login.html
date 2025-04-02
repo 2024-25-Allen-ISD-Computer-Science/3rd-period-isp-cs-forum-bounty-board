@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+<div class="theme-toggle">
+    <button id="theme-toggle-btn" aria-label="Toggle theme">
+        <svg id="sun-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-sun"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2"></path><path d="M12 20v2"></path><path d="m4.93 4.93 1.41 1.41"></path><path d="m17.66 17.66 1.41 1.41"></path><path d="M2 12h2"></path><path d="M20 12h2"></path><path d="m6.34 17.66-1.41 1.41"></path><path d="m19.07 4.93-1.41 1.41"></path></svg>
+        <svg id="moon-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="icon-moon"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path></svg>
+    </button>
+</div>
+
+<div class="login-container">
+    <h1 class="login-title">Login</h1>
+    <div class="login-card">
+        <div class="card-header">
+            <h2 class="welcome-text">Welcome back</h2>
+        </div>
+        <form id="login-form">
+            <div class="card-content">
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input
+                            id="email"
+                            type="email"
+                            placeholder="Enter your email"
+                            required
+                    >
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input
+                            id="password"
+                            type="password"
+                            placeholder="Enter your password"
+                            required
+                    >
+                </div>
+            </div>
+            <div class="card-footer">
+                <button type="submit" class="submit-button">Sign In</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script src="https://unpkg.com/pocketbase@0.19.0/dist/pocketbase.umd.js"></script>
+<script src="login.js"></script>
+</body>
+</html>
